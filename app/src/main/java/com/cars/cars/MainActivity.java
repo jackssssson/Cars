@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     public void AsyncTaskRequest(){
-        String url = "http://79.100.147.125:8080/api/cars";
+        String url = "http://10.86.177.253:8080/api/cars";
 
         final OkHttpClient client = new OkHttpClient();
 
@@ -86,7 +86,32 @@ public class MainActivity extends AppCompatActivity {
         listViewCars.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(new Intent(MainActivity.this, CarImage.class));
+                String s = "";
+
+                switch (position){
+                    case 0:
+                        s = "AlfaRomeo";
+                        break;
+                    case 1:
+                        s = "Mercedes";
+                        break;
+                    case 2:
+                        s = "Opel";
+                        break;
+                    case 3:
+                        s = "Ferrari";
+                        break;
+                    case 4:
+                        s = "Maserati";
+                        break;
+                    case 5:
+                        s = "Audi";
+                        break;
+                }
+
+                Intent intent = new Intent(MainActivity.this, CarImage.class);
+                intent.putExtra("car", s);
+                startActivity(intent);
             }
         });
     }
