@@ -18,7 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import cars.Car;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import model.Car;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -26,7 +28,9 @@ import okhttp3.Response;
 public class MainActivity extends AppCompatActivity {
 
     private List<Car> listOfCars;
-    private ListView listViewCars;
+
+    @BindView(R.id.list_View_Cars)
+    ListView listViewCars;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -34,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ButterKnife.bind(this);
+
         listOfCars = new ArrayList<>();
-        listViewCars = findViewById(R.id.list_View_Cars);
 
         AsyncTaskRequest();
 
