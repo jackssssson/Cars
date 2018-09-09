@@ -10,13 +10,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.gson.Gson;
+import com.cars.cars.presenter.AllCars;
+import com.cars.cars.presenter.DaggerGetAllCars;
+import com.cars.cars.presenter.GetAllCars;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.list_View_Cars)
     ListView listViewCars;
 
-    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +44,13 @@ public class MainActivity extends AppCompatActivity {
         listOfCars = new ArrayList<>();
 
         AsyncTaskRequest();
-
         System.out.println();
+
     }
 
     @SuppressLint("StaticFieldLeak")
-    public void AsyncTaskRequest(){
-        String url = "http://10.86.177.253:8080/api/cars";
+    public void AsyncTaskRequest() {
+        String url = "http://94.236.249.124:8080/api/cars";
 
         final OkHttpClient client = new OkHttpClient();
 
@@ -69,8 +70,10 @@ public class MainActivity extends AppCompatActivity {
                         MainActivity.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                listOfCars = gson(myResponce);
-                                String[] carNames = carInfoNames(listOfCars);
+                                GetAllCars getAllCars = DaggerGetAllCars.create();
+                                AllCars allCars = getAllCars.getTheCars();
+                                listOfCars = allCars.gson(myResponce);
+                                String[] carNames = allCars.carInfoNames(listOfCars);
                                 showListView(carNames);
                             }
                         });
@@ -83,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
         }.execute(true);
     }
 
+
     private void showListView(String[] carNames) {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_list_item_1, carNames);
@@ -93,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String s = "";
 
-                switch (position){
+                switch (position) {
                     case 0:
                         s = "AlfaRomeo";
                         break;
@@ -119,25 +123,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    public List<Car> gson(String s) {
-        Gson gs = new Gson();
-
-        Car[] car = gs.fromJson(s, Car[].class);
-
-        return new ArrayList<>(Arrays.asList(car));
-    }
-
-    public String[] carInfoNames(List<Car> cars){
-        String[] carNames = new String[listOfCars.size()];
-        for (int i = 0; i < cars.size(); i++){
-            Car car = cars.get(i);
-
-            String s = car.toString();
-            carNames[i] = s;
-        }
-
-        return carNames;
     }
 }
