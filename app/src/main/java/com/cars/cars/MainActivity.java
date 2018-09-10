@@ -3,8 +3,8 @@ package com.cars.cars;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     public void AsyncTaskRequest() {
-        String url = "http://94.236.249.124:8080/api/cars";
+        String url = "http://10.242.34.80:8080/api/cars";
 
         final OkHttpClient client = new OkHttpClient();
 
@@ -115,6 +114,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 5:
                         s = "Audi";
+                        break;
+                    case 6:
+                        s ="Bmw";
+                        break;
+                    case 7:
+                        s ="Renault";
                         break;
                 }
 

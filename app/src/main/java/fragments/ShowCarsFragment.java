@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
+
 import com.cars.cars.CarImage;
 import com.cars.cars.R;
 
-public class ShowCarsFragment extends Fragment {
+public class ShowCarsFragment extends Fragment implements SearchView.OnQueryTextListener {
     private ImageView imageView;
 
     public ShowCarsFragment() {
@@ -51,6 +53,20 @@ public class ShowCarsFragment extends Fragment {
             case "Audi":
                 imageView.setImageResource(R.drawable.audi);
                 break;
+            case "Renault":
+                imageView.setImageResource(R.drawable.renault);
+            case "Bmw":
+                imageView.setImageResource(R.drawable.bmw);
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        return false;
     }
 }
